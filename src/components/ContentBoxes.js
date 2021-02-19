@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Character from './Character';
-import axios from 'axios';
+
+const BoxStyled = styled.div`
+    background: black;
+    border: 1px solid white;
+    color: gold;
+    margin: 0 auto;
+    width: 50%;
+`
 
 export default function Characters(){
     const [characterList, setCharectorList] = useState([]);
@@ -11,15 +18,11 @@ export default function Characters(){
             .then( response => response.json())
             .then( response => response.results)
             .then( results => setCharectorList(results))
-        // axios.get('http://swapi.dev/api/people/?page=1')
-        //     .then( response => setCharectorList(response.data.results.slice(0, 5)))
-        //     .catch( err => console.log(err))
     }, [])
 
     return (
-        <div>
-            {/* {characterList.map( character => <p>Test {character.name}</p>)} */}
-            {characterList.map( character => <Character content={character}/>)}
-        </div>
+        <BoxStyled>
+            {characterList.map( character => <Character key={character.name} content={character}/>)}
+        </BoxStyled>
     )
 }
