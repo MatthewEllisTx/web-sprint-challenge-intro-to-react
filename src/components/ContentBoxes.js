@@ -10,23 +10,12 @@ const BoxStyled = styled.div`
     width: 50%;
 `
 
-function getCharectorData(character){
-    
+const NextButtonStyled = styled.h1`
+    color: #d1d1d1;
+    text-shadow: 1px 1px 5px #fff;
+`
 
-    // const data =  {
-    //     name: character.name,
-    //     description: {
-    //         birth_year: character.birth_year,
-    //         eye_color: character.eye_color,
-    //         gender: character.gender,
-    //         hair_color: character.hair_color,
-    //         height: character.height,
-    //         mass: character.mass,
-    //         skin_color: character.skin_color
-    //     }
-    // }
-    //console.log(data);
-    //return data;
+function getCharectorData(character){
 
     return fetch(character.homeworld)
             .then( response => response.json())
@@ -49,22 +38,34 @@ function getCharectorData(character){
 
 export default function Characters(){
     const [characterList, setCharectorList] = useState([]);
+    const [nextPage, setNextPage] = useState('http://swapi.dev/api/people/?page=1');
 
     useEffect(() => {
-        fetch('http://swapi.dev/api/people/?page=1')
+        fetch(nextPage)
             .then( response => response.json())
-            .then( response => Promise.all(response.results.map( character => getCharectorData(character))))
+            .then( response => {
+                setNextPage(response.next);
+                return Promise.all(response.results.map( character => getCharectorData(character)));
+            })
             .then( characters => setCharectorList(characters))
-            // .then( response => {
-            //     //console.log(response.results);
-            //     setCharectorList(response.results.map( character => getCharectorData(character)));
-            // })
 
     }, [])
+
+    const getNextPage = function(){
+        fetch(nextPage)
+            .then( response => {console.log(response); return response.json()})
+            .then( response => {
+                console.log(response);
+                setNextPage(response.next);
+                return Promise.all(response.results.map( character => getCharectorData(character)));
+            })
+            .then( characters => setCharectorList([...characterList, ...characters]))
+    }
 
     return (
         <BoxStyled>
             {characterList.map( character => <Character key={character.name} content={character}/>)}
+            {nextPage !== null && <NextButtonStyled onClick={getNextPage}>Next</NextButtonStyled>}
         </BoxStyled>
     )
 }

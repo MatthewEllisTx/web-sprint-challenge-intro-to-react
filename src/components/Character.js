@@ -32,7 +32,7 @@ const DescriptionPieceStyled = styled.div`
     color: ${props => props.showDescription ? 'gold' : 'black'};
     display: flex;
     justify-content: space-between;
-    transition: color 0.5s, visibility 0.5s ${props => props.showDescription ? 'ease' : 'ease-in'};
+    transition: color 0.5s, visibility 0.3s ${props => props.showDescription ? 'ease' : 'ease-in'};
     visibility: ${props => props.showDescription ? 'visible' : 'hidden'};
 `
 
@@ -50,16 +50,6 @@ function DescriptionPiece({arr, showDescription}){
 export default function Character({content}){
     const [showDescription, setShowDescription] = useState(false);
     const {name, description} = content;
-
-    // const data = {
-    //     birth_year: content.birth_year,
-    //     eye_color: content.eye_color,
-    //     gender: content.gender,
-    //     hair_color: content.hair_color,
-    //     height: content.height,
-    //     mass: content.mass,
-    //     skin_color: content.skin_color
-    // }
 
     return (
         <ContentBoxStyled>
