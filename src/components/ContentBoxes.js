@@ -10,14 +10,56 @@ const BoxStyled = styled.div`
     width: 50%;
 `
 
+function getCharectorData(character){
+    
+
+    // const data =  {
+    //     name: character.name,
+    //     description: {
+    //         birth_year: character.birth_year,
+    //         eye_color: character.eye_color,
+    //         gender: character.gender,
+    //         hair_color: character.hair_color,
+    //         height: character.height,
+    //         mass: character.mass,
+    //         skin_color: character.skin_color
+    //     }
+    // }
+    //console.log(data);
+    //return data;
+
+    return fetch(character.homeworld)
+            .then( response => response.json())
+            .then( response => {
+                return {
+                    name: character.name,
+                    description: {
+                        birth_year: character.birth_year,
+                        eye_color: character.eye_color,
+                        gender: character.gender,
+                        hair_color: character.hair_color,
+                        height: character.height,
+                        homeworld: response.name, //homeworld
+                        mass: character.mass,
+                        skin_color: character.skin_color
+                    }
+                }
+            })
+}
+
 export default function Characters(){
     const [characterList, setCharectorList] = useState([]);
 
     useEffect(() => {
         fetch('http://swapi.dev/api/people/?page=1')
             .then( response => response.json())
-            .then( response => response.results)
-            .then( results => setCharectorList(results))
+            .then( response => Promise.all(response.results.map( character => getCharectorData(character))))
+            .then( characters => setCharectorList(characters))
+            // .then( response => {
+            //     //console.log(response.results);
+            //     setCharectorList(response.results.map( character => getCharectorData(character)));
+            // })
+
     }, [])
 
     return (

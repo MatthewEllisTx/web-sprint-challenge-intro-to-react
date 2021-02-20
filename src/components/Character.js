@@ -49,21 +49,22 @@ function DescriptionPiece({arr, showDescription}){
 
 export default function Character({content}){
     const [showDescription, setShowDescription] = useState(false);
+    const {name, description} = content;
 
-    const data = {
-        birth_year: content.birth_year,
-        eye_color: content.eye_color,
-        gender: content.gender,
-        hair_color: content.hair_color,
-        height: content.height,
-        mass: content.mass,
-        skin_color: content.skin_color
-    }
+    // const data = {
+    //     birth_year: content.birth_year,
+    //     eye_color: content.eye_color,
+    //     gender: content.gender,
+    //     hair_color: content.hair_color,
+    //     height: content.height,
+    //     mass: content.mass,
+    //     skin_color: content.skin_color
+    // }
 
     return (
         <ContentBoxStyled>
             <TitleStyled>
-                <h2>{content.name}</h2>
+                <h2>{name}</h2>
                 <div onClick={() => setShowDescription(!showDescription)}>
                     <ButtonStyled flipButton={showDescription}>V</ButtonStyled>
                     {/* button to show description */}
@@ -71,7 +72,7 @@ export default function Character({content}){
             </TitleStyled>
             <DescriptionBoxStyled showDescription={showDescription}>
                 {/* {showDescription && Object.entries(data).map( piece => <DescriptionPiece key={piece[0]} arr={piece}/>)} */}
-                {Object.entries(data).map( piece => <DescriptionPiece showDescription={showDescription} key={piece[0]} arr={piece}/>)}
+                {Object.entries(description).map( piece => <DescriptionPiece showDescription={showDescription} key={piece[0]} arr={piece}/>)}
             </DescriptionBoxStyled>
         </ContentBoxStyled>
     )
