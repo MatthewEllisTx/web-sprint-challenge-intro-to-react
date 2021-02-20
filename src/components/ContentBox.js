@@ -14,6 +14,7 @@ const TitleStyled = styled.div`
 `
 
 const ButtonStyled = styled.h2`
+    color: #d1d1d1;
     transform: rotate(${props => props.flipButton ? '180deg' : '0deg'});
     transition: transform 0.5s;
 `
@@ -21,8 +22,6 @@ const ButtonStyled = styled.h2`
 const DescriptionBoxStyled = styled.div`
     height: auto;
     max-height: ${props => {
-        // console.log(props.showDescription)
-        // console.log(props.showDescription ? '1000px' : 0)
         return props.showDescription ? '1000px' : 0
     }};
     transition: max-height 0.5s;

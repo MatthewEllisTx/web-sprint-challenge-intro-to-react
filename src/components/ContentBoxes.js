@@ -13,6 +13,15 @@ const BoxStyled = styled.div`
 const SelectorButtonsStyled = styled.div`
     display: flex;
     justify-content: space-between;
+    text-shadow: 1px 1px 5px #fff;
+
+    .characters {
+        color: ${props => props.display === 'characters' ? 'grey' : '#d1d1d1'};
+    }
+    
+    .planets {
+        color: ${props => props.display === 'planets' ? 'grey' : '#d1d1d1'};
+    }
 `
 
 const NextButtonStyled = styled.h1`
@@ -73,34 +82,22 @@ export default function Characters(){
 
     }, [])
 
-    console.log('Planet List', planetList)
 
     const getnextPage = function(nextPage, setNextPage, getData, setList, oldList){
         fetch(nextPage)
-            .then( response => {console.log(response); return response.json()})
+            .then( response => response.json())
             .then( response => {
-                console.log(response);
                 setNextPage(response.next);
                 return Promise.all(response.results.map( content => getData(content)));
             })
             .then( list => setList([...oldList, ...list]))
-
-        
-        // fetch(nextCharacters)
-        //     .then( response => {console.log(response); return response.json()})
-        //     .then( response => {
-        //         console.log(response);
-        //         setNextCharacters(response.next);
-        //         return Promise.all(response.results.map( character => getCharectorData(character)));
-        //     })
-        //     .then( characters => setCharacterList([...characterList, ...characters]))
     }
 
     return (
         <BoxStyled>
-            <SelectorButtonsStyled>
-                <h1 onClick={() => setDisplay('characters')}>Show Characters</h1>
-                <h1 onClick={() => setDisplay('planets')}>Show Planets</h1>
+            <SelectorButtonsStyled display={display}>
+                <h1 class='characters' onClick={() => setDisplay('characters')}>Show Characters</h1>
+                <h1 class='planets' onClick={() => setDisplay('planets')}>Show Planets</h1>
             </SelectorButtonsStyled>
             {display === 'characters' && characterList.map( character => <ContentBox key={character.name} content={character}/>)}
             {(display === 'characters' && nextCharacters !== null) && <NextButtonStyled onClick={() => getnextPage(nextCharacters, setNextCharacters, getCharacterData, setCharacterList, characterList)}>Next</NextButtonStyled>}
