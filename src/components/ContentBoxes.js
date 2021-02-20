@@ -72,14 +72,8 @@ export default function Characters(){
     const [nextPlanets, setNextPlanets] = useState('http://swapi.dev/api/planets/?page=1');
 
     useEffect(() => {
-        fetch(nextCharacters)
-            .then( response => response.json())
-            .then( response => {
-                setNextCharacters(response.next);
-                return Promise.all(response.results.map( character => getCharacterData(character)));
-            })
-            .then( characters => setCharacterList(characters))
-
+        getnextPage(nextCharacters, setNextCharacters, getCharacterData, setCharacterList, characterList)
+        getnextPage(nextPlanets, setNextPlanets, getPlanetData, setPlanetList, planetList)
     }, [])
 
 
