@@ -47,7 +47,7 @@ function DescriptionPiece({arr, showDescription}){
     )
 }
 
-export default function Character({content}){
+export default function ContentBox({content}){
     const [showDescription, setShowDescription] = useState(false);
     const {name, description} = content;
 
