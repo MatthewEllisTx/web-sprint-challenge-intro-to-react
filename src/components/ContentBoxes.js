@@ -90,8 +90,8 @@ export default function Characters(){
     return (
         <BoxStyled>
             <SelectorButtonsStyled display={display}>
-                <h1 class='characters' onClick={() => setDisplay('characters')}>Show Characters</h1>
-                <h1 class='planets' onClick={() => setDisplay('planets')}>Show Planets</h1>
+                <h1 className='characters' onClick={() => setDisplay('characters')}>Show Characters</h1>
+                <h1 className='planets' onClick={() => setDisplay('planets')}>Show Planets</h1>
             </SelectorButtonsStyled>
             {display === 'characters' && characterList.map( character => <ContentBox key={character.name} content={character}/>)}
             {(display === 'characters' && nextCharacters !== null) && <NextButtonStyled onClick={() => getnextPage(nextCharacters, setNextCharacters, getCharacterData, setCharacterList, characterList)}>Next</NextButtonStyled>}

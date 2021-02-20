@@ -24,6 +24,7 @@ const DescriptionBoxStyled = styled.div`
     max-height: ${props => {
         return props.showDescription ? '1000px' : 0
     }};
+    overflow: hidden;
     transition: max-height 0.5s;
 `
 
@@ -31,8 +32,7 @@ const DescriptionPieceStyled = styled.div`
     color: ${props => props.showDescription ? 'gold' : 'black'};
     display: flex;
     justify-content: space-between;
-    transition: color 0.5s, visibility 0.3s ${props => props.showDescription ? 'ease' : 'ease-in'};
-    visibility: ${props => props.showDescription ? 'visible' : 'hidden'};
+    transition: color 0.5s;
 `
 
 function DescriptionPiece({arr, showDescription}){
